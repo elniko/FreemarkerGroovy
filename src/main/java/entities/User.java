@@ -13,8 +13,6 @@ public class User {
 
     String sex ;
 
-     String pp;
-
 
     public String getEmail() {
         return email;
