@@ -1,6 +1,8 @@
 package entities;
 
 import com.sun.istack.internal.NotNull;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Arrays;
 
@@ -9,15 +11,19 @@ import java.util.Arrays;
  */
 public class User {
 
-    @NotNull
+    @NotEmpty(message = "Error empty")
     String login;
 
+    @NotEmpty(message = "Error empty")
     String pass;
 
+    @Email(message = "Error email")
     String email;
 
+    @NotEmpty(message = "Error empty")
     String sex ;
 
+    @NotNull
     String role[];
 
     public String[] getRole() {

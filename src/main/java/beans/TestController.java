@@ -3,9 +3,11 @@ package beans;
 import entities.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,29 +29,35 @@ public class TestController {
     List<User> users = new ArrayList<>();
 
     @ModelAttribute(value = "user")
-    public User addUserAttribute() {
+    public Model addUserAttribute(Model model) {
         User user = new User();
         user.setLogin("Login");
         user.setPass("pass");
         user.setEmail("mail");
         user.setSex("male");
-        return user;
-    }
 
-
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public String showUserForm(Model model) {
+        model.addAttribute("user", user);
         Map<String, String> sex = new HashMap<>();
         sex.put("male", "male");
         sex.put("female", "female");
         model.addAttribute("sex", sex);
         model.addAttribute("users", users);
+        return model;
+    }
+
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String showUserForm(Model model) {
+
         return "user";
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
-
-    public String saveUser(@ModelAttribute("user") User user,  RedirectAttributes redirectAttrs) {
+    public String saveUser(@Valid @ModelAttribute(value = "user")  User user, BindingResult result, RedirectAttributes redirectAttrs, Model model) {
+        if(result.hasErrors()) {
+            model.addAttribute("error", "Form has errors");
+            return "user";
+        }
         users.add(user);
         redirectAttrs.addFlashAttribute("message", "User created!");
         return "redirect:/user";
