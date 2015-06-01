@@ -11,16 +11,16 @@ import java.util.Arrays;
  */
 public class User {
 
-    @NotEmpty(message = "Error empty")
+    @NotEmpty(message = "Error empty name")
     String login;
 
-    @NotEmpty(message = "Error empty")
+    @NotEmpty(message = "Error empty pass")
     String pass;
 
-    @Email(message = "Error email")
+    @Email(message = "Error email ")
     String email;
 
-    @NotEmpty(message = "Error empty")
+    @NotEmpty(message = "Error empty sex")
     String sex ;
 
     @NotNull

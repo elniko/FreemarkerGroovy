@@ -1,6 +1,10 @@
 <#import "/spring.ftl" as spring />
 <html >
 <body>
+
+
+<#assign sex= {"male": "male", "female" : "female"} />
+
 ${message!}
 <#if users??>
     <#list users as user >
@@ -8,11 +12,15 @@ ${message!}
     </#list>
 </#if>
 <@spring.bind "user" />
+${spring.status.errorMessages?size}
+
 
 <#if spring.status.error>
+<ul>
     <#list spring.status.errorMessages as error>
     <li>${error}</li>
     </#list>
+</ul>
 </#if>
 
 <form  method="post">
